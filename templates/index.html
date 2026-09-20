@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f766e" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>PDF to Excel Converter</title>
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="{{ url_for('index') }}" aria-label="PDF to Excel home">
+            <span class="brand-mark">P</span>
+            <span>Paperline</span>
+        </a>
+        <span class="secure-label">Private workspace</span>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <p class="eyebrow">PDF WORKSPACE</p>
+            <h1>Turn documents<br /><em>into usable data.</em></h1>
+            <p class="subtitle">Convert forms, statements, and document pages into downloadable Excel workbooks.</p>
+        </section>
+
+        <form method="post" enctype="multipart/form-data" class="upload-form" id="upload-form">
+            <label for="pdf_file" class="drop-zone" id="drop-zone">
+                <span class="upload-icon" aria-hidden="true">↑</span>
+                <span class="drop-title">Drop a PDF here</span>
+                <span class="drop-meta">or choose a file from your device</span>
+                <span class="file-name" id="file-name">PDF files up to 16 MB</span>
+            </label>
+            <input type="file" name="pdf_file" id="pdf_file" accept="application/pdf,.pdf" required />
+            <button type="submit" id="submit-button"><span>Convert to Excel</span><span aria-hidden="true">→</span></button>
+        </form>
+
+        {% if error %}
+            <div class="error-box">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <div class="feature-strip">
+            <span><strong>01</strong> Layout-aware extraction</span>
+            <span><strong>02</strong> Images preserved</span>
+            <span><strong>03</strong> Excel download</span>
+        </div>
+    </div>
+    <script>
+        const input = document.getElementById('pdf_file');
+        const dropZone = document.getElementById('drop-zone');
+        const fileName = document.getElementById('file-name');
+        const form = document.getElementById('upload-form');
+        const submitButton = document.getElementById('submit-button');
+
+        function showFile(file) {
+            if (!file) return;
+            fileName.textContent = file.name;
+            dropZone.classList.add('has-file');
+        }
+
+        input.addEventListener('change', () => showFile(input.files[0]));
+        ['dragenter', 'dragover'].forEach((eventName) => {
+            dropZone.addEventListener(eventName, (event) => {
+                event.preventDefault();
+                dropZone.classList.add('is-dragging');
+            });
+        });
+        ['dragleave', 'drop'].forEach((eventName) => {
+            dropZone.addEventListener(eventName, (event) => {
+                event.preventDefault();
+                dropZone.classList.remove('is-dragging');
+            });
+        });
+        dropZone.addEventListener('drop', (event) => {
+            const file = event.dataTransfer.files[0];
+            if (file && file.type === 'application/pdf') {
+                input.files = event.dataTransfer.files;
+                showFile(file);
+            }
+        });
+        form.addEventListener('submit', () => {
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span>Converting…</span><span aria-hidden="true">↗</span>';
+        });
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => navigator.serviceWorker.register('{{ url_for('static', filename='sw.js') }}'));
+        }
+    </script>
+</body>
+</html>

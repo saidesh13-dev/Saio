@@ -1,0 +1,9 @@
+{
+  "name": "PDF to Excel Converter",
+  "short_name": "PDF to Excel",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0f766e",
+  "description": "Convert PDF documents into structured Excel workbooks."
+}
