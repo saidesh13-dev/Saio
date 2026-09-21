@@ -3,33 +3,33 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0f766e" />
+    <meta name="theme-color" content="#071321" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <title>PDF to Excel Converter</title>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Project Digital Hustle | PDF to Excel</title>
     <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="{{ url_for('index') }}" aria-label="PDF to Excel home">
-            <span class="brand-mark">P</span>
-            <span>Paperline</span>
+        <a class="brand" href="{{ url_for('index') }}" aria-label="Project Digital Hustle home">
+            <span class="brand-mark" aria-hidden="true"><span>DH</span><i>↗</i></span>
+            <span class="brand-copy"><strong>PROJECT</strong><b>DIGITAL <em>HUSTLE</em></b></span>
         </a>
-        <span class="secure-label">Private workspace</span>
+        <span class="secure-label"><span class="status-dot"></span> Private workspace</span>
     </header>
 
     <main class="container">
         <section class="intro">
-            <p class="eyebrow">PDF WORKSPACE</p>
-            <h1>Turn documents<br /><em>into usable data.</em></h1>
-            <p class="subtitle">Convert forms, statements, and document pages into downloadable Excel workbooks.</p>
+            <p class="eyebrow">DIGITAL WORKFLOW / 01</p>
+            <h1>Turn documents<br /><em>into momentum.</em></h1>
+            <p class="subtitle">Convert forms, statements, and document pages into clean, downloadable Excel workbooks.</p>
         </section>
 
         <form method="post" enctype="multipart/form-data" class="upload-form" id="upload-form">
             <label for="pdf_file" class="drop-zone" id="drop-zone">
                 <span class="upload-icon" aria-hidden="true">↑</span>
-                <span class="drop-title">Drop a PDF here</span>
+                <span class="drop-title">Drop your PDF here</span>
                 <span class="drop-meta">or choose a file from your device</span>
                 <span class="file-name" id="file-name">PDF files up to 16 MB</span>
             </label>
@@ -49,7 +49,7 @@
         <div class="feature-strip">
             <span><strong>01</strong> Layout-aware extraction</span>
             <span><strong>02</strong> Images preserved</span>
-            <span><strong>03</strong> Excel download</span>
+            <span><strong>03</strong> Ready to move</span>
         </div>
     </div>
     <script>

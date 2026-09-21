@@ -1,9 +1,9 @@
 {
-  "name": "PDF to Excel Converter",
-  "short_name": "PDF to Excel",
+  "name": "Project Digital Hustle",
+  "short_name": "Digital Hustle",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#0f766e",
+  "background_color": "#071321",
+  "theme_color": "#071321",
   "description": "Convert PDF documents into structured Excel workbooks."
 }
