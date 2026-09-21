@@ -82,9 +82,44 @@
                 showFile(file);
             }
         });
-        form.addEventListener('submit', () => {
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
             submitButton.disabled = true;
             submitButton.innerHTML = '<span>Converting…</span><span aria-hidden="true">↗</span>';
+
+            try {
+                const response = await fetch(form.action || window.location.href, {
+                    method: 'POST',
+                    body: new FormData(form),
+                });
+
+                const contentType = response.headers.get('content-type') || '';
+                if (contentType.includes('text/html')) {
+                    document.open();
+                    document.write(await response.text());
+                    document.close();
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error('Conversion failed. Please try again.');
+                }
+
+                const blob = await response.blob();
+                const downloadUrl = URL.createObjectURL(blob);
+                const downloadLink = document.createElement('a');
+                downloadLink.href = downloadUrl;
+                downloadLink.download = 'converted.xlsx';
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                downloadLink.remove();
+                URL.revokeObjectURL(downloadUrl);
+            } catch (error) {
+                window.alert(error.message || 'Conversion failed. Please try again.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<span>Convert to Excel</span><span aria-hidden="true">→</span>';
+            }
         });
 
         if ('serviceWorker' in navigator) {

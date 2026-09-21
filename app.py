@@ -4,12 +4,10 @@ from io import BytesIO
 from pathlib import Path
 
 import fitz
-import pytesseract
 from flask import Flask, render_template, request, send_file
 from openpyxl import Workbook
 from openpyxl.drawing.image import Image as XLImage
 from PIL import Image
-from pytesseract import Output
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -308,6 +306,9 @@ def is_scanned_or_stamped_page(page):
 
 def ocr_page_as_rows(page, page_number):
     try:
+        import pytesseract
+        from pytesseract import Output
+
         pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))
         image = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
         data = pytesseract.image_to_data(image, config="--psm 6", output_type=Output.DICT)
